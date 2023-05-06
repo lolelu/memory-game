@@ -1,11 +1,10 @@
-"use client";
 import React from "react";
-import { Card } from "@/lib/cards";
+import { Card as CardType } from "@/lib/cards";
 import Image from "next/image";
 
 interface CardProps {
-  card: Card;
-  onFlip: (card: Card) => void;
+  card: CardType;
+  onFlip: (card: CardType) => void;
 }
 
 const Card = ({ card, onFlip }: CardProps) => {
@@ -17,8 +16,16 @@ const Card = ({ card, onFlip }: CardProps) => {
       onFlip(card);
     }
   };
+
+  // Add this useEffect to update the card's flip function
+  React.useEffect(() => {
+    card.flip = () => {
+      setIsFlipped((prev) => !prev);
+    };
+  }, []);
+
   return (
-    <div className=" w-24 h-40 flex select-none	  " onClick={handleClick}>
+    <div className="w-24 h-40 flex select-none" onClick={handleClick}>
       <div
         className={`bg-red-100 basis-full flex items-center  justify-stretch ${
           isFlipped ? " " : "hidden"
@@ -28,7 +35,7 @@ const Card = ({ card, onFlip }: CardProps) => {
           <Image
             src={card.image}
             alt={card.id.toString()}
-            className={` object-cover w-24 h-40`}
+            className={`object-cover w-24 h-40`}
             width={96}
             height={160}
             loading="eager"

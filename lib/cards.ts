@@ -37,11 +37,12 @@ const shuffle = (cards: Card[]) => {
   return cards;
 };
 
-export interface Card {
-  id: number;
-  image: string;
-}
-
 export const Cards = (): Card[] => {
   return ShuffledCards();
 };
+
+export interface Card {
+  id: number;
+  image: string;
+  flip: () => void;
+}

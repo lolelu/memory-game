@@ -1,35 +1,42 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card";
 
 import { Card as CardType, Cards } from "@/lib/cards";
 
-import { useEffect, useState } from "react";
-
 const GameFrame = () => {
-  // dealing logic here
   const [cards, setCards] = useState<CardType[]>([]);
+  const [flippedCards, setFlippedCards] = useState<CardType[]>([]);
+  const [matchedCards, setMatchedCards] = useState<CardType[]>([]);
 
   useEffect(() => {
     setCards(Cards());
   }, []);
 
-  //flip logic here
-  const [flippedCard, setFlippedCard] = useState<CardType | null>(null);
-
   const handleFlip = (card: CardType) => {
-    if (flippedCard == null) {
-      setFlippedCard(card);
-    } else {
-      if (flippedCard.id !== card.id) {
-        setFlippedCard(null);
-        // TODO: flip back
+    if (flippedCards.length === 0) {
+      setFlippedCards([card]);
+    } else if (flippedCards.length === 1) {
+      const firstCard = flippedCards[0];
+
+      if (firstCard.id !== card.id) {
+        setFlippedCards([]);
+        setTimeout(() => {
+          firstCard.flip();
+          card.flip();
+        }, 1000);
       } else {
-        setFlippedCard(null);
-        // TODO: cards stay flipped
+        setMatchedCards([...matchedCards, firstCard, card]);
+        setFlippedCards([]);
       }
     }
   };
+
+  useEffect(() => {
+    if (matchedCards.length === cards.length) {
+      alert("You won!");
+    }
+  }, [matchedCards, cards]);
 
   return (
     <div>
