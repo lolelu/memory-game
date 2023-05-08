@@ -11,10 +11,12 @@ const GenerateCards = (): Card[] => {
   const randomAdd = randomInt(20, 200);
 
   for (let i = 0; i < 8; i++) {
-    const card = {
+    const card: Card = {
       id: i,
       //   image: `https://source.unsplash.com/featured/?nature,water,${i}`,
       image: `https://picsum.photos/seed/${i + randomAdd}/96/160`,
+      flipUp: () => {},
+      flipDown: () => {},
     };
     cards.push(card);
     cards.push({ ...card });
@@ -44,5 +46,6 @@ export const Cards = (): Card[] => {
 export interface Card {
   id: number;
   image: string;
-  flip: () => void;
+  flipUp: () => void;
+  flipDown: () => void;
 }

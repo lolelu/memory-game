@@ -8,19 +8,21 @@ interface CardProps {
 }
 
 const Card = ({ card, onFlip }: CardProps) => {
-  const [isFlipped, setIsFlipped] = React.useState(false);
+  const [isFlippedUp, setIsFlippedUp] = React.useState(false);
 
   const handleClick = () => {
-    if (!isFlipped) {
-      setIsFlipped(true);
+    if (!isFlippedUp) {
       onFlip(card);
     }
   };
 
   // Add this useEffect to update the card's flip function
   React.useEffect(() => {
-    card.flip = () => {
-      setIsFlipped((prev) => !prev);
+    card.flipUp = () => {
+      setIsFlippedUp(true);
+    };
+    card.flipDown = () => {
+      setIsFlippedUp(false);
     };
   }, []);
 
@@ -28,7 +30,7 @@ const Card = ({ card, onFlip }: CardProps) => {
     <div className="w-24 h-40 flex select-none" onClick={handleClick}>
       <div
         className={`bg-red-100 basis-full flex items-center  justify-stretch ${
-          isFlipped ? " " : "hidden"
+          isFlippedUp ? " " : "hidden"
         }`}
       >
         <div>
@@ -43,7 +45,9 @@ const Card = ({ card, onFlip }: CardProps) => {
         </div>
       </div>
 
-      <div className={`bg-blue-100 basis-full ${!isFlipped ? " " : "hidden"}`}>
+      <div
+        className={`bg-blue-100 basis-full ${!isFlippedUp ? " " : "hidden"}`}
+      >
         Card Back
       </div>
     </div>

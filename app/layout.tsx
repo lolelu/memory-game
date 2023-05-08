@@ -1,3 +1,4 @@
+import { ScoreContextProvider } from "@/context/score.context";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -16,9 +17,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center justify-center p-24">
-          {children}
-        </main>
+        <ScoreContextProvider>
+          <main className="flex min-h-screen flex-col items-center justify-center p-24">
+            {children}
+          </main>
+        </ScoreContextProvider>
       </body>
     </html>
   );

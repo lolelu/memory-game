@@ -1,13 +1,20 @@
 "use client";
-import { GetScores, AddScore, ClearScores } from "@/lib/scores";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ScoreContext } from "@/context/score.context";
+import { GetScores, GetHighScore } from "@/lib/scores";
 
 const Scores = () => {
+  const { state, dispatch } = useContext(ScoreContext);
   const [scores, setScores] = useState([]);
 
+  const ClearScores = () => {
+    dispatch({ type: "CLEAR" });
+  };
+
+  //TODO: This rerender every frame, fix it
   useEffect(() => {
     setScores(GetScores());
-  }, []);
+  }, [state]);
 
   return (
     <div>
@@ -18,16 +25,9 @@ const Scores = () => {
         ))}
       </ul>
 
-      <button onClick={CreateFakeScores}>Create fake scores</button>
+      <button onClick={ClearScores}>ClearScores</button>
     </div>
   );
 };
 
 export default Scores;
-
-const CreateFakeScores = () => {
-  ClearScores();
-  for (let i = 0; i < 10; i++) {
-    AddScore(Math.floor(Math.random() * 1000));
-  }
-};

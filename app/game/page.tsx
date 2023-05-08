@@ -1,10 +1,9 @@
-import GameFrame from "@/components/GameFrame";
-import React from "react";
+import GameBoard from "@/components/GameBoard";
 
 const Game = () => {
   return (
     <div>
-      <GameFrame />
+      <GameBoard />
     </div>
   );
 };

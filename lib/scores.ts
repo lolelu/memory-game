@@ -1,4 +1,16 @@
-export const AddScore = (score: number) => {
+const winningMovePoints = 15;
+const losingMovePoints = 5;
+
+export const AddPoints = (points: number): number => {
+  points += winningMovePoints;
+  return points;
+};
+export const SubtractPoints = (points: number): number => {
+  points -= losingMovePoints;
+  return points;
+};
+
+export const SaveScore = (score: number) => {
   const scores = GetScores();
 
   scores.push(score);
