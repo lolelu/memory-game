@@ -12,13 +12,12 @@ const GameBoard = () => {
 
   const [cardsDealt, setCardsDealt] = useState<CardType[]>([]);
   const [flippedCard, setFlippedCard] = useState<CardType | null>(null);
-  const [flipping, setFlipping] = useState<boolean>(false);
+  const [interacting, setInteracting] = useState<boolean>(false);
   const [flippedPairs, setFlippedPairs] = useState<number>(0);
   const [openGameOverModal, setOpenGameOverModal] = useState<boolean>(false);
 
   useEffect(() => {
-    const cards = Cards();
-    setCardsDealt(cards);
+    ResetGameState();
   }, []);
 
   useEffect(() => {
@@ -26,11 +25,11 @@ const GameBoard = () => {
   }, [flippedPairs]);
 
   const handleFlip = async (card: CardType) => {
-    if (flipping) {
+    if (interacting) {
       return;
     }
 
-    setFlipping(true);
+    setInteracting(true);
     card.flipUp();
 
     if (!flippedCard) {
@@ -46,9 +45,10 @@ const GameBoard = () => {
         flippedCard.flipDown();
         card.flipDown();
       }
+      await new Promise((resolve) => setTimeout(resolve, 500));
       setFlippedCard(null);
     }
-    setFlipping(false);
+    setInteracting(false);
   };
 
   const AddPoints = () => {
@@ -78,9 +78,32 @@ const GameBoard = () => {
     }
   };
 
+  const ResetGameState = async () => {
+    // Reset the game state
+    setInteracting(true);
+    cardsDealt.forEach((card) => card.flipDown());
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    setFlippedCard(null);
+    setFlippedPairs(0);
+    dispatch({ type: "RESETPOINTS" });
+    const cards = Cards();
+    setCardsDealt(cards);
+    setInteracting(false);
+  };
+
   return (
-    <div>
-      <h1>Score: {state.score}</h1>
+    <div className="flex flex-col justify-center items-center gap-4">
+      <h1 className=" text-4xl font-bold font-serif ">MEMOVAS</h1>
+      <h2 className=" text-xl font-bold">Score: {state.score}</h2>
+      <div className="flex flex-row gap-4">
+        <Link href="/" className=" p-4">
+          GO BACK
+        </Link>
+        <button onClick={ResetGameState} className=" p-4">
+          RESET
+        </button>
+      </div>
+
       <div className="grid grid-cols-4 grid-rows-4 gap-6">
         {cardsDealt.map((card, index) => (
           <Card key={index} card={card} onFlip={handleFlip} />
@@ -88,7 +111,11 @@ const GameBoard = () => {
       </div>
 
       {/* Dialog that shows when you win */}
-      <GameOverModal open={openGameOverModal} setOpen={setOpenGameOverModal} />
+      <GameOverModal
+        open={openGameOverModal}
+        setOpen={setOpenGameOverModal}
+        reset={ResetGameState}
+      />
     </div>
   );
 };

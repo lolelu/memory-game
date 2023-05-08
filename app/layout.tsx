@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ScoreContextProvider>
-          <main className="flex min-h-screen flex-col items-center justify-center p-24">
+          <main className="flex min-h-screen flex-col items-center justify-center p-12">
             {children}
           </main>
         </ScoreContextProvider>

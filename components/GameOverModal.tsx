@@ -5,9 +5,10 @@ import Link from "next/link";
 interface Props {
   open: boolean;
   setOpen: (value: boolean) => void;
+  reset: () => void;
 }
 
-const GameOverModal = ({ open, setOpen }: Props) => {
+const GameOverModal = ({ open, setOpen, reset }: Props) => {
   const endGameModal = React.useRef<HTMLDialogElement>(null);
   const { state } = useContext(ScoreContext);
 
@@ -23,9 +24,15 @@ const GameOverModal = ({ open, setOpen }: Props) => {
     <dialog ref={endGameModal}>
       <h1>Game Over</h1>
       <p>Your score is {state.score}</p>
-      <Link href="/">
-        <button>Save Score</button>
-      </Link>
+
+      <button
+        onClick={() => {
+          reset();
+          setOpen(false);
+        }}
+      >
+        Save Score
+      </button>
     </dialog>
   );
 };
