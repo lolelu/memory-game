@@ -5,16 +5,16 @@ import Link from "next/link";
 import Card from "./Card";
 
 import { Card as CardType, Cards } from "@/lib/cards";
+import GameOverModal from "./GameOverModal";
 
 const GameBoard = () => {
   const { state, dispatch } = useContext(ScoreContext);
+
   const [cardsDealt, setCardsDealt] = useState<CardType[]>([]);
   const [flippedCard, setFlippedCard] = useState<CardType | null>(null);
   const [flipping, setFlipping] = useState<boolean>(false);
-  const [score, setScore] = useState<number>(0);
   const [flippedPairs, setFlippedPairs] = useState<number>(0);
-
-  const endGameModal = React.useRef<HTMLDialogElement>(null);
+  const [openGameOverModal, setOpenGameOverModal] = useState<boolean>(false);
 
   useEffect(() => {
     const cards = Cards();
@@ -70,7 +70,9 @@ const GameBoard = () => {
     if (flippedPairs === cardsDealt.length / 2) {
       // Game is over
       dispatch({ type: "SAVE" });
-      endGameModal.current?.showModal();
+
+      //TODO:RESET THE GAME
+      setOpenGameOverModal(true);
 
       //go back to the home page and save the score (use next router)
     }
@@ -79,20 +81,14 @@ const GameBoard = () => {
   return (
     <div>
       <h1>Score: {state.score}</h1>
-      <div className="grid grid-cols-4 grid-rows-4 gap-4">
+      <div className="grid grid-cols-4 grid-rows-4 gap-6">
         {cardsDealt.map((card, index) => (
           <Card key={index} card={card} onFlip={handleFlip} />
         ))}
       </div>
 
       {/* Dialog that shows when you win */}
-      <dialog ref={endGameModal}>
-        <h1>Game Over</h1>
-        <p>Your score is {state.score}</p>
-        <Link href="/">
-          <button>Save Score</button>
-        </Link>
-      </dialog>
+      <GameOverModal open={openGameOverModal} setOpen={setOpenGameOverModal} />
     </div>
   );
 };

@@ -14,7 +14,7 @@ const GenerateCards = (): Card[] => {
     const card: Card = {
       id: i,
       //   image: `https://source.unsplash.com/featured/?nature,water,${i}`,
-      image: `https://picsum.photos/seed/${i + randomAdd}/96/160`,
+      image: `https://picsum.photos/seed/${i + randomAdd}/144/160`,
       flipUp: () => {},
       flipDown: () => {},
     };

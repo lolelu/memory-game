@@ -27,9 +27,12 @@ const Card = ({ card, onFlip }: CardProps) => {
   }, []);
 
   return (
-    <div className="w-24 h-40 flex select-none" onClick={handleClick}>
+    <div
+      className="w-36 h-40 flex select-none  rounded-md border-4 group hover:rotate-3 transform duration-200 cursor-pointer  transition-all  "
+      onClick={handleClick}
+    >
       <div
-        className={`bg-red-100 basis-full flex items-center  justify-stretch ${
+        className={`bg-red-100 basis-full flex items-center rounded-md  justify-stretch ${
           isFlippedUp ? " " : "hidden"
         }`}
       >
@@ -37,8 +40,8 @@ const Card = ({ card, onFlip }: CardProps) => {
           <Image
             src={card.image}
             alt={card.id.toString()}
-            className={`object-cover w-24 h-40`}
-            width={96}
+            className={`object-cover`}
+            width={144}
             height={160}
             loading="eager"
           />
@@ -46,10 +49,10 @@ const Card = ({ card, onFlip }: CardProps) => {
       </div>
 
       <div
-        className={`bg-blue-100 basis-full ${!isFlippedUp ? " " : "hidden"}`}
-      >
-        Card Back
-      </div>
+        className={` basis-full ${
+          !isFlippedUp ? " " : "hidden"
+        } bg-gradient-to-br from-blue-400 to bg-purple-600  `}
+      ></div>
     </div>
   );
 };
