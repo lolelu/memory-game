@@ -17,6 +17,7 @@ const GameBoard = () => {
   const [openGameOverModal, setOpenGameOverModal] = useState<boolean>(false);
 
   useEffect(() => {
+    // Deal the cards when the component mounts
     ResetGameState();
   }, []);
 
@@ -26,28 +27,37 @@ const GameBoard = () => {
 
   const handleFlip = async (card: CardType) => {
     if (interacting) {
+      // Prevent the user from interacting with the cards while they are flipping
       return;
     }
 
     setInteracting(true);
+    // Flip the card interacted with
     card.flipUp();
 
     if (!flippedCard) {
+      // If there is no flipped card, set the flipped card to the card interacted with
       setFlippedCard(card);
     } else {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // If there is a flipped card, check if the card interacted with is the same as the flipped card
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
       if (flippedCard.id === card.id) {
+        // If the card interacted with is the same as the flipped card, add points and keep the cards flipped
         AddPoints();
         setFlippedPairs((value) => value + 1);
       } else {
+        // If the card interacted with is not the same as the flipped card, remove points and flip the cards back down
         RemovePoints();
         flippedCard.flipDown();
         card.flipDown();
       }
+      // Reset the flipped card useState to null after a delay
       await new Promise((resolve) => setTimeout(resolve, 500));
       setFlippedCard(null);
     }
+
+    // Allow the user to interact with the cards again
     setInteracting(false);
   };
 
@@ -63,26 +73,29 @@ const GameBoard = () => {
 
   const CheckGameStatus = () => {
     // Check if the game is over
+
     if (cardsDealt.length === 0) {
+      //Game is not over, continue
       return;
     }
 
     if (flippedPairs === cardsDealt.length / 2) {
       // Game is over
       dispatch({ type: "SAVE" });
-
-      //TODO:RESET THE GAME
       setOpenGameOverModal(true);
-
-      //go back to the home page and save the score (use next router)
     }
   };
 
+  //Function that resets the game state in case of forfeit or win
   const ResetGameState = async () => {
     // Reset the game state
     setInteracting(true);
-    cardsDealt.forEach((card) => card.flipDown());
-    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    for (const card of cardsDealt) {
+      card.flipDown();
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    await new Promise((resolve) => setTimeout(resolve, 100));
     setFlippedCard(null);
     setFlippedPairs(0);
     dispatch({ type: "RESETPOINTS" });

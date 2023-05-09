@@ -13,7 +13,7 @@ type StateType = {
 };
 
 type ActionType = {
-  type: string;
+  type: "CORRECT" | "WRONG" | "RESETPOINTS" | "SAVE" | "CLEAR";
 };
 
 const initialState: StateType = {

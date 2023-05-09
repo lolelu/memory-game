@@ -21,7 +21,7 @@ export const SaveScore = (score: number) => {
   SetScores(scores);
 };
 
-export const GetScores = () => {
+export const GetScores = (): number[] => {
   const scores = localStorage.getItem("scores");
   return scores ? JSON.parse(scores) : [];
 };
