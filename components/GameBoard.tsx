@@ -117,7 +117,7 @@ const GameBoard = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-4 grid-rows-4 gap-6">
+      <div className="grid md:grid-cols-4 md:grid-rows-4 grid-cols-2 gap-6">
         {cardsDealt.map((card, index) => (
           <Card key={index} card={card} onFlip={handleFlip} />
         ))}

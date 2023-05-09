@@ -19,6 +19,10 @@ const GameOverModal = ({ open, setOpen, reset }: Props) => {
     }
   }, [open]);
 
+  //   useEffect(() => {
+  //     endGameModal.current?.showModal();
+  //   }, []);
+
   return (
     <dialog
       ref={endGameModal}

@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center ">
-        <h1 className="text-4xl font-bold text-white mb-8">
+      <div className="min-h-screen flex flex-col items-center justify-center text-center">
+        <h1 className="sm:text-4xl font-bold text-white mb-8 text-2xl">
           Welcome to MEMOVAS
         </h1>
         <div className="flex flex-col items-center justify-stretch gap-4 w-80">

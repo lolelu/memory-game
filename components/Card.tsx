@@ -29,7 +29,7 @@ const Card = ({ card, onFlip }: CardProps) => {
 
   return (
     <div
-      className="w-36 h-40 grid grid-cols-1 grid-rows-1 select-none  rounded-md group hover:scale-105 transform duration-200 cursor-pointer  transition-all  "
+      className="md:w-36 md:h-40 w-24 h-28 grid grid-cols-1 grid-rows-1 select-none  rounded-md group hover:scale-105 transform duration-200 cursor-pointer  transition-all  "
       onClick={handleClick}
     >
       <div
