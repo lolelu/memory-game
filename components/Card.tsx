@@ -10,22 +10,22 @@ interface CardProps {
 const Card = ({ card, onFlip }: CardProps) => {
   const [isFlippedUp, setIsFlippedUp] = React.useState(false);
 
-  const handleClick = () => {
+  //handle click function (only if card is not flipped up)
+  const handleClick = (): void => {
     if (!isFlippedUp) {
       onFlip(card);
     }
   };
 
-  card.flipUp = () => {
+  //flip up function
+  card.flipUp = (): void => {
     setIsFlippedUp(true);
   };
-  card.flipDown = () => {
+
+  //flip down function
+  card.flipDown = (): void => {
     setIsFlippedUp(false);
   };
-  // Add this useEffect to update the card's flip function
-  // React.useEffect(() => {
-
-  // }, []);
 
   return (
     <div

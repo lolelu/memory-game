@@ -1,6 +1,7 @@
-const winningMovePoints = 15;
+const winningMovePoints = 10;
 const losingMovePoints = 5;
 
+// AddPoints and SubtractPoints are used to calculate the score
 export const AddPoints = (points: number): number => {
   points += winningMovePoints;
   return points;
@@ -10,6 +11,7 @@ export const SubtractPoints = (points: number): number => {
   return points;
 };
 
+// SaveScore, GetScores, SetScores, GetHighScore, and ClearScores are used to save and retrieve scores from local storage
 export const SaveScore = (score: number) => {
   const scores = GetScores();
 

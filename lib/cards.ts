@@ -1,15 +1,16 @@
 //Generate an array of 16 cards, 8 pairs of 2 cards, each pair has the same image from unsplash
 
+//Generate a random int
 const randomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 const GenerateCards = (): Card[] => {
   const cards = [];
 
-  //generate a random int between 1 and 200
-
+  //generate a random int between 1 and 200 to randomize the images
   const randomAdd = randomInt(20, 200);
 
+  //generate 8 pairs of cards
   for (let i = 0; i < 8; i++) {
     const card: Card = {
       id: i,
@@ -23,6 +24,8 @@ const GenerateCards = (): Card[] => {
   }
   return cards;
 };
+
+// return shuffled cards
 const ShuffledCards = (): Card[] => {
   const cards = GenerateCards();
   return shuffle(cards);
@@ -39,10 +42,12 @@ const shuffle = (cards: Card[]) => {
   return cards;
 };
 
+// export the cards, already shuffled adn ready to be used
 export const Cards = (): Card[] => {
   return ShuffledCards();
 };
 
+// Card interface
 export interface Card {
   id: number;
   image: string;

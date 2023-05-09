@@ -5,12 +5,16 @@ import { GetScores, GetHighScore } from "@/lib/scores";
 import Link from "next/link";
 
 const Scores = () => {
+  // Get the state and dispatch from the context
   const { state, dispatch } = useContext(ScoreContext);
-  const [scores, setScores] = useState<number[]>([]);
 
+  // Add points to the score
   const ClearScores = () => {
     dispatch({ type: "CLEAR" });
   };
+
+  // Get the scores from the token
+  const [scores, setScores] = useState<number[]>([]);
 
   useEffect(() => {
     setScores(GetScores());

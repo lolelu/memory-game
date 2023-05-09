@@ -8,9 +8,13 @@ interface Props {
 }
 
 const GameOverModal = ({ open, setOpen, reset }: Props) => {
+  // Ref to the modal
   const endGameModal = React.useRef<HTMLDialogElement>(null);
+
+  // Get the score from the context
   const { state } = useContext(ScoreContext);
 
+  // Logic to open and close the modal
   useEffect(() => {
     if (open) {
       endGameModal.current?.showModal();
@@ -18,10 +22,6 @@ const GameOverModal = ({ open, setOpen, reset }: Props) => {
       endGameModal.current?.close();
     }
   }, [open]);
-
-  //   useEffect(() => {
-  //     endGameModal.current?.showModal();
-  //   }, []);
 
   return (
     <dialog
